@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical"
+    android:id="@+id/ll1"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textAllCaps="false"
+        android:clickable="true"
+        tools:clickable="true" />
+
+    <TextView
+        android:layout_width="256dp"
+        android:layout_height="100dp"
+        android:id="@+id/textView8"
+        android:layout_weight="0.16"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentEnd="true"
+        android:textSize="22sp"
+        android:textStyle="normal|bold"
+        android:textAllCaps="false"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:textSize="20dp"
+        android:text="Η θερμοκρασία είναι"
+        android:id="@+id/buttontm"
+        android:textAllCaps="false"
+        android:clickable="true"
+        tools:clickable="true"
+        android:layout_below="@+id/textView8"
+        android:layout_alignEnd="@+id/buttonhm2" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/textView11"
+        android:layout_weight="0.16"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/buttontm"
+        android:layout_alignParentEnd="true"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:textStyle="normal|bold"
+        android:textSize="48sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Η υγρασία είναι"
+        android:textAllCaps="false"
+        android:clickable="true"
+        tools:clickable="true"
+        android:id="@+id/buttonhm2"
+        android:textSize="20dp"
+        android:layout_below="@+id/textView11"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/textView9"
+        android:layout_weight="0.16"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/buttonhm2"
+        android:layout_alignParentEnd="true"
+        android:textAllCaps="true"
+        android:textSize="48sp"
+        android:textStyle="normal|bold"
+        />
+</RelativeLayout>

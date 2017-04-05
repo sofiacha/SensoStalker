@@ -1,0 +1,8 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="AndroidLintHardcodedDebugMode" enabled="true" level="TYPO" enabled_by_default="false">
+      <scope name="Android Instrumentation Tests" level="ERROR" enabled="true" />
+    </inspection_tool>
+  </profile>
+</component>

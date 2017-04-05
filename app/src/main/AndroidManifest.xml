@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="dipl.sofia.sensostalker"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".app.AppController"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.MainActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".activity.MapSensoRe"
+            android:label="Ο αισθητήρας στο χάρτη"
+            android:parentActivityName=".activity.LoggedInActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.LoggedInActivity" />
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="Σύνδεση"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="Εγγραφή"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activity.LoginActivity"
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".activity.LoggedInActivity"
+            android:label="Λογαριασμός"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activity.LoginActivity">
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".activity.UpdateLogIn"
+            android:label="Επεξεργαστείτε τις βασικές σας πληροφορίες"
+            android:parentActivityName=".activity.LoggedInActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.LoggedInActivity" />
+        </activity>
+        <activity
+            android:name=".activity.InfoSensoRem"
+            android:label="Μετρήσεις Αισθητήρα"
+            android:parentActivityName=".activity.BasicScr">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.BasicScr" />
+        </activity>
+        <activity
+            android:name=".activity.DetailsActivity"
+            android:label="Αναλύσεις μετρήσεων στη θερμοκρασία"
+            android:parentActivityName=".activity.InfoSensoRem">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.InfoSensoRem" />
+        </activity>
+        <activity
+            android:name=".activity.DetailsTemph"
+            android:label="Θερμοκρασία ανά λεπτό"
+            android:parentActivityName=".activity.InfoSensoRem">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.InfoSensoRem" />
+        </activity>
+        <activity
+            android:name=".activity.DetHumh"
+            android:label="Υγρασία ανά λεπτό"
+            android:parentActivityName=".activity.InfoSensoRem">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.InfoSensoRem" />
+        </activity>
+        <activity
+            android:name=".activity.DetHum"
+            android:label="Αναλύσεις μετρήσεων στην Υγρασία"
+            android:parentActivityName=".activity.InfoSensoRem">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.InfoSensoRem" />
+        </activity>
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="Σχετικά με το SensoStalker" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".activity.BasicScr"
+            android:label="Μετρήσεις Αισθητήρα"
+            android:parentActivityName=".activity.MapSensoRe">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.MapSensoRe" />
+        </activity>
+        <activity
+            android:name=".activity.TermoAct"
+            android:label="Μετρήσεις Αισθητήρα"
+            android:parentActivityName=".activity.BasicScr">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dipl.sofia.sensostalker.activity.BasicScr" />
+        </activity>
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>
