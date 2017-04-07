@@ -1,6 +1,5 @@
 package dipl.sofia.sensostalker.activity;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,14 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import dipl.sofia.sensostalker.R;
 import dipl.sofia.sensostalker.app.AppConfig;
@@ -51,7 +43,6 @@ public class DetHumh extends AppCompatActivity {
     private SQLiteHandler db;
 
     ArrayList<String> tempes;
-    ArrayAdapter<String> adapter;
     TableLayout ta1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,12 +66,7 @@ public class DetHumh extends AppCompatActivity {
           pDialog.setCancelable(false);
 
         fillCountryTable("Humidity", "TimeStamp", "Sensor ID");
-
-
         Fortwsh();
-
-
-
     }
 
     private void Fortwsh() {
@@ -94,37 +80,20 @@ public class DetHumh extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(TAG, "HUMH Response: " + response.toString());
-                        //hideDialog();
-                        // Toast.makeText(getApplicationContext(),"whhhhoooooo", Toast.LENGTH_LONG).show();
-
                         for (int i = 0; i < response.length(); i++) {
-
-
-
                             try {
                                 JSONObject jo = response.getJSONObject(i);
-                                String humh = jo.getString("humidity"); // + "     " + jo.getString("hour") + "     " + jo.getString("day") + "     " + jo.getString("divergence") +  "     " + jo.getString("idsens");
+                                String humh = jo.getString("humidity");
                                 String tim = jo.getString("tumitimeh");
                                 String senid = jo.getString("idsens");
-                                // String div = jo.getString("divergence");
-                                // String senid = jo.getString("idsens");
                                 //Converting to dip unit
-
                                 fillCountryTable(humh, tim, senid);
-
-                                //String hour = ;
-                                //                         tableLayout.addView(createTableRow(adapter.getItem(i));
-                                // tempes.add(avertemp);
-                                // Toast.makeText(getApplicationContext(),tempes.toString(), Toast.LENGTH_LONG).show();
-
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-
                           pDialog.dismiss();
-                        // adapter.notifyDataSetChanged();
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -133,22 +102,16 @@ public class DetHumh extends AppCompatActivity {
                 Log.e(TAG, "Humh Error: " + error.getMessage());
                 Toast.makeText(getApplicationContext(),
                         "Connection Error:" + error.getMessage(), Toast.LENGTH_LONG).show();
-                //  hideDialog();
-
             }
         });
-        //  Toast.makeText(getApplicationContext(),tempes.toString(), Toast.LENGTH_LONG).show();
-
-// Access the RequestQueue through your singleton class.
+        // Access the RequestQueue through your singleton class.
         AppController.getInstance().addToRequestQueue(jsarRequest, tag_string_req);
     }
 
 
     private void logoutUser() {
         session.setLogin(false);
-
         db.deleteUsers();
-
         // Launching the login activity
         Intent intent = new Intent(DetHumh.this, LoginActivity.class);
         startActivity(intent);
@@ -165,44 +128,31 @@ public class DetHumh extends AppCompatActivity {
         t1 = new TextView(this);
         t2 = new TextView(this);
         t3 = new TextView(this);
-        // t4 = new TextView(this);
-        //  t5 = new TextView(this);
 
         t1.setText(humh);
         t2.setText(timest);
         t3.setText(senid);
-        //   t4.setText(div);
-        // t5.setText(senid);
 
         t1.setTypeface(null, 1);
         t2.setTypeface(null, 1);
         t3.setTypeface(null, 1);
-        //   t4.setTypeface(null, 1);
-        //  t5.setTypeface(null, 1);
 
         t1.setTextSize(15);
         t2.setTextSize(15);
         t3.setTextSize(15);
-        //  t4.setTextSize(15);
-        //  t5.setTextSize(15);
 
         t1.setWidth(100 * dip);
         t2.setWidth(180 * dip);
         t3.setWidth(100 * dip);
-        //  t4.setWidth(100 * dip);
-        //   t5.setWidth(100 * dip);
 
         t1.setPadding(10*dip, 0, 0, 0);
 
         row.addView(t1);
         row.addView(t2);
         row.addView(t3);
-        //  row.addView(t4);
-        //  row.addView(t5);
 
         ta1.addView(row, new TableLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
     }
 
 

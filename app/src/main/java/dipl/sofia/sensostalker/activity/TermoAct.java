@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -30,9 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -49,7 +46,7 @@ public class TermoAct extends AppCompatActivity {
     private SessionManager session;
     ArrayList<String> temps;
     private static final String TAG = TermoAct.class.getSimpleName();
-    static int megth, megthd, meg;
+    static int megthd, meg;
     private final Handler mHandler = new Handler();
     private Runnable mTimer4, mTimer5, mTimer6;
 
@@ -67,7 +64,6 @@ public class TermoAct extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //Log.d("DEBUG", "button11 pressed");
                 Intent remot15 = new Intent(TermoAct.this, DetailsTemph.class);
                 startActivityForResult(remot15, 0);
             }
@@ -78,7 +74,6 @@ public class TermoAct extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //Log.d("DEBUG", "button11 pressed");
                 Intent remot14 = new Intent(TermoAct.this, DetailsActivity.class);
                 startActivityForResult(remot14, 0);
             }
@@ -101,7 +96,6 @@ public class TermoAct extends AppCompatActivity {
     }
 
     private void Fortwsh_grafikwn() {
-
         GraphView grtempdate = (GraphView) findViewById(R.id.graphtempdate);
         sertempdate = new LineGraphSeries<DataPoint>(GeneratetemphDate());
         grtempdate.addSeries(sertempdate);
@@ -116,7 +110,6 @@ public class TermoAct extends AppCompatActivity {
             }
         });
         grtempdate.setTitle("Θερμοκρασία ανά λεπτό");
-        //  grtempdate.setTitleTextSize(60);
         grtempdate.setTitleColor(R.color.colorPrimaryDark);
 
         GraphView graphtemp = (GraphView) findViewById(R.id.graphtemp);
@@ -137,7 +130,6 @@ public class TermoAct extends AppCompatActivity {
         seriestemD.setColor(Color.RED);
         graphtemp.addSeries(seriestemD);
         seriestemD.setTitle("Απόκλιση");
-        //seriestem.setAnimated(true);
         seriestemD.setDrawDataPoints(true);
              seriestemD.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
@@ -146,12 +138,10 @@ public class TermoAct extends AppCompatActivity {
             }
         });
         graphtemp.setTitle("Μέση θερμοκρασία και απόκλιση ανά ώρα");
-        // graphtemp.setTitleTextSize(R.dimen.activity_horizontal_margin);
         graphtemp.setTitleColor(R.color.colorPrimaryDark);
         graphtemp.getLegendRenderer().setVisible(true);
         graphtemp.getLegendRenderer().setBackgroundColor(Color.TRANSPARENT);
         graphtemp.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-
 
         GraphView graphavtemp = (GraphView) findViewById(R.id.graphavtemp);
         seriesavtem = new LineGraphSeries<DataPoint>(GenerateavtempData());
@@ -173,13 +163,8 @@ public class TermoAct extends AppCompatActivity {
             }
         });
         graphavtemp.setTitle("Μέση Θερμοκρασία ανά απόκλιση");
-        //  graphavtemp.setTitleTextSize(R.dimen.activity_horizontal_margin);
         graphavtemp.setTitleColor(R.color.colorPrimaryDark);
-
-
     }
-
-
 
     @Override
     public void onPause() {
@@ -190,10 +175,9 @@ public class TermoAct extends AppCompatActivity {
     }
 
     static int[] avg, thd;
-    static int[] di, id1d, idhum1;
-    static Time[] ti;
-    static Date[] da, hda;
-    static Timestamp[] tiTH, tiHD, tiTH1, tiTH2;
+    static int[] di, id1d;
+    static Date[] da;
+    static Timestamp[] tiTH, tiTH1;
 
     private DataPoint[] GeneratetemphDate() {
         String tag_string_req = "req_thdate";
@@ -206,13 +190,11 @@ public class TermoAct extends AppCompatActivity {
                         thd = new int[megthd];
                         id1d = new int[megthd];
                         tiTH = new Timestamp[megthd];
-                        //daTH = new Date[meg];
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject jo1 = response.getJSONObject(i);
-                                int tempd = jo1.getInt("temperature"); // + "     " + jo.getString("hour") + "     " + jo.getString("day") + "     " + jo.getString("divergence") +  "     " + jo.getString("idsens");
+                                int tempd = jo1.getInt("temperature");
                                 String tim = jo1.getString("timestemh");
-
                                 int senidd = jo1.getInt("idsens");
                                 Timestamp ts = Timestamp.valueOf(tim);
                                 //Converting to dip unit
@@ -231,12 +213,10 @@ public class TermoAct extends AppCompatActivity {
                 Log.e(TAG, "Update Error: " + error.getMessage());
                 Toast.makeText(getApplicationContext(),
                         "Connection Error:" + error.getMessage(), Toast.LENGTH_LONG).show();
-
             }
         });
         // Access the RequestQueue through your singleton class.
         AppController.getInstance().addToRequestQueue(jsarRequestthd, tag_string_req);
-
         DataPoint[] values5 = new DataPoint[megthd];
         for (int j = 0; j < megthd; j++) {
             DataPoint v5 = new DataPoint(tiTH[j], thd[j]);
@@ -249,23 +229,19 @@ public class TermoAct extends AppCompatActivity {
     private DataPoint[] GeneratetemphData() {
         fortwsht_avg();
         DataPoint[] values2 = new DataPoint[meg];
-        int temp;
         for (int j = 0; j < meg; j++) {
             DataPoint v2 = new DataPoint(tiTH1[j],avg[j]);
             values2[j] = v2;
         }
-
         return values2;
     }
 
     private DataPoint[] GeneratetemphdData() {
-        //fortwsht_avg();
         DataPoint[] values2 = new DataPoint[meg];
         for (int j = 0; j < meg; j++) {
             DataPoint v2 = new DataPoint(tiTH1[j],di[j]);
             values2[j] = v2;
         }
-
         return values2;
     }
 
@@ -281,7 +257,6 @@ public class TermoAct extends AppCompatActivity {
                         avg = new int[meg];
                         di = new int[meg];
                         tiTH1 = new Timestamp[meg];
-                        //     ti= new Time[meg];
                         da = new Date[meg];
                         for (int i = 0; i < response.length(); i++) {
                             try {
@@ -290,12 +265,7 @@ public class TermoAct extends AppCompatActivity {
                                 String day = jo.getString("day");
                                 String hour = jo.getString("hour");
                                 int div = jo.getInt("divergence");
-                                //String senid = jo.getString("idsens");
-                                //Converting to dip unit
-                               // Log.d("WRA T HOUR",hour);
-                                //   Date da1 = String(day);
                                 Timestamp ts1 = Timestamp.valueOf(day + " " +hour);
-                                //Log.d("WRA TOY TS1",hour);
                                 avg[i] = avertemp;
                                 di[i] = div;
                                 tiTH1[i] = ts1;
@@ -311,8 +281,6 @@ public class TermoAct extends AppCompatActivity {
                 Log.e(TAG, "Update Error: " + error.getMessage());
                 Toast.makeText(getApplicationContext(),
                         "Connection Error:" + error.getMessage(), Toast.LENGTH_LONG).show();
-
-
             }
         });
         // Access the RequestQueue through your singleton class.
@@ -321,7 +289,6 @@ public class TermoAct extends AppCompatActivity {
 
 
     private DataPoint[] GenerateavtempData() {
-        //fortwsht_avg();
         int temp1, temp2;
         for (int i = 0; i < meg - 1; i++) {
             for (int j = 1; j < meg - i; j++) {
@@ -335,18 +302,13 @@ public class TermoAct extends AppCompatActivity {
                 }
             }
         }
-
         DataPoint[] values = new DataPoint[meg];
         for (int j = 0; j < meg; j++) {
             DataPoint v = new DataPoint(di[j], avg[j]);
             values[j] = v;
         }
-
         return values;
     }
-
-
-
 
     @Override
     public void onResume() {
@@ -365,7 +327,6 @@ public class TermoAct extends AppCompatActivity {
             @Override
             public void run() {
                 sertempdate.resetData(GeneratetemphDate());
-               // seriesavtem.resetData(GeneratetemphdData());
                 mHandler.postDelayed(this, 300);
             }
         };
@@ -378,14 +339,11 @@ public class TermoAct extends AppCompatActivity {
             }
         };
         mHandler.postDelayed(mTimer6, 1000);
-
       }
 
     private void logoutUser() {
         session.setLogin(false);
-
         db.deleteUsers();
-
         // Launching the login activity
         Intent intent = new Intent(TermoAct.this, LoginActivity.class);
         startActivity(intent);
@@ -418,14 +376,11 @@ public class TermoAct extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.map_menu, menu);
         return true;
     }
-
-
 
 }

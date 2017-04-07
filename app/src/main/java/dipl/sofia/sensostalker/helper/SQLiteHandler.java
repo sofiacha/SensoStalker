@@ -82,9 +82,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 		if ((!(TextUtils.isEmpty(name)))) {
 			ContentValues values = new ContentValues();
 			values.put(KEY_NAME, name); // Name
-			//values.put(KEY_PASSWORD, password); // password
 			values.put(KEY_UID, uid); // Email
-			//values.put(KEY_UPDATED_AT, updated_at); // Created At
 
 
 			String[] kmail = new String[]{email};
@@ -131,7 +129,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 			user.put("email", cursor.getString(2));
 			user.put("uid", cursor.getString(3));
 			user.put("created_at", cursor.getString(4));
-			//user.put("password", cursor.getString(4));
 		}
 		cursor.close();
 		db.close();

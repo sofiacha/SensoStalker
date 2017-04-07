@@ -2,50 +2,29 @@ package dipl.sofia.sensostalker.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 
-//import com.google.android.gms.fitness.data.DataPoint;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
-import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
-import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
-import com.jjoe64.graphview.series.PointsGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.Series;
-//import com.google.android.gms.fitness.data.DataPoint;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -55,11 +34,7 @@ import org.json.JSONObject;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
 
 import dipl.sofia.sensostalker.R;
 import dipl.sofia.sensostalker.app.AppConfig;
@@ -67,21 +42,19 @@ import dipl.sofia.sensostalker.app.AppController;
 import dipl.sofia.sensostalker.helper.SQLiteHandler;
 import dipl.sofia.sensostalker.helper.SessionManager;
 
-import static android.app.PendingIntent.getActivity;
 
 public class InfoSensoRem extends AppCompatActivity {
 
-    LineGraphSeries<DataPoint> seriesdhum, serieshum, sertempdate, serhumdate, seriestem, seriesavhum;
+    LineGraphSeries<DataPoint> seriesdhum, serieshum, serhumdate, seriesavhum;
     private SQLiteHandler db;
     private SessionManager session;
     ArrayList<String> hums;
     private static final String TAG = InfoSensoRem.class.getSimpleName();
-    static int megth, megthd, meghumd, meg, megah, megh;
+    static int meghumd, megah;
     private final Handler mHandler = new Handler();
-    private Runnable mTimer1, mTimer2, mTimer3, mTimer4;
-    private Timestamp ta, tt;
+    private Runnable mTimer1, mTimer2, mTimer3;
 
-//    final java.text.DateFormat dateTimeFormatter = DateFormat.getTimeFormat(this);
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -102,8 +75,7 @@ public class InfoSensoRem extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //Log.d("DEBUG", "button11 pressed");
-                Intent remot16 = new Intent(InfoSensoRem.this, DetHumh.class);
+               Intent remot16 = new Intent(InfoSensoRem.this, DetHumh.class);
                 startActivityForResult(remot16, 0);
             }
         });
@@ -114,7 +86,6 @@ public class InfoSensoRem extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //Log.d("DEBUG", "button11 pressed");
                 Intent remot17 = new Intent(InfoSensoRem.this, DetHum.class);
                 startActivityForResult(remot17, 0);
             }
@@ -154,7 +125,6 @@ public class InfoSensoRem extends AppCompatActivity {
             }
         });
         grhumdate.setTitle("Υγρασία ανά λεπτό");
-      //  grhumdate.setTitleTextSize(60);
         grhumdate.setTitleColor(R.color.colorPrimaryDark);
 
 
@@ -185,7 +155,6 @@ public class InfoSensoRem extends AppCompatActivity {
                 Toast.makeText(InfoSensoRem.this, "Η απόκλιση στο συγκεκριμένο σημείο είναι: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
             }
         });
-       // graphhum.setTitleTextSize(R.dimen.activity_horizontal_margin);
         graphhum.setTitleColor(R.color.colorPrimaryDark);
         graphhum.getLegendRenderer().setVisible(true);
         graphhum.getLegendRenderer().setBackgroundColor(Color.TRANSPARENT);
@@ -214,7 +183,6 @@ public class InfoSensoRem extends AppCompatActivity {
             }
         });
         graphavhum.setTitle("Μέση υγρασία ανά απόκλιση");
-      //  graphavhum.setTitleTextSize(60);
         graphavhum.setTitleColor(R.color.colorPrimaryDark);
     }
 
@@ -225,9 +193,7 @@ public class InfoSensoRem extends AppCompatActivity {
      */
     private void logoutUser() {
         session.setLogin(false);
-
         db.deleteUsers();
-
         // Launching the login activity
         Intent intent = new Intent(InfoSensoRem.this, LoginActivity.class);
         startActivity(intent);
@@ -266,25 +232,6 @@ public class InfoSensoRem extends AppCompatActivity {
 
         mHandler.postDelayed(mTimer3, 1000);
     }
-  /*  @Override
-    public void onResume() {
-        super.onResume();
-        mTimer1 = new Runnable() {
-            @Override
-            public void run() {
-                sertempdate.resetData(GeneratetemphDate());
-                serhumdate.resetData(GeneratehumhDate());
-                seriesavtem.resetData(GenerateavtempData());
-                seriesavhum.resetData(GenerateavhumData());
-                //serieshum.resetData(GeneratehumhData());
-               // seriestem.resetData(GeneratetemphData());
-                mHandler.post(this);
-                //mHandler.postDelayed(this, 100);
-            }
-        };
-        mHandler.postDelayed(mTimer1, 100);
-
-    } */
 
     @Override
     public void onPause() {
@@ -294,11 +241,9 @@ public class InfoSensoRem extends AppCompatActivity {
         super.onPause();
     }
 
-    static int[] avg, thd, th, hum, humd, hdi, avgh;
-    static int[] di, id1, idhum1d, id1d, idhum1;
-      static Time[] ti;
-     static Date[] da, hda;
-    static Timestamp[] tiTH, tiHD, tiTH1, tiTH2;
+    static int[] humd, hdi, avgh;
+    static int[] idhum1d;
+    static Timestamp[]  tiHD, tiTH2;
 
 
     private DataPoint[] GeneratehumhDate() {
@@ -312,13 +257,11 @@ public class InfoSensoRem extends AppCompatActivity {
                         humd = new int[meghumd];
                         idhum1d = new int[meghumd];
                         tiHD = new Timestamp[meghumd];
-                        //tiTH= new Time[meg];
-                        //daTH = new Date[meg];
                         for (int i = 0; i < response.length(); i++) {
 
                             try {
                                 JSONObject jo6 = response.getJSONObject(i);
-                                int hud = jo6.getInt("humidity"); // + "     " + jo.getString("hour") + "     " + jo.getString("day") + "     " + jo.getString("divergence") +  "     " + jo.getString("idsens");
+                                int hud = jo6.getInt("humidity");
                                 String timd = jo6.getString("tumitimeh");
                                 int senridd = jo6.getInt("idsens");
                                 //Converting to dip unit
@@ -359,7 +302,6 @@ public class InfoSensoRem extends AppCompatActivity {
 
 
     private DataPoint[] GenerateavhumData() {
-      //  for_avhum();
         DataPoint[] values4 = new DataPoint[megah];
 
         int temp1, temp2;
@@ -404,18 +346,6 @@ public class InfoSensoRem extends AppCompatActivity {
     private DataPoint[] GeneratehumhdData() {
         for_avhum();
         DataPoint[] values3 = new DataPoint[megah];
-        int temp4;
-     /*   for (int i = 0; i < megh - 1; i++) {
-
-            for (int j = 1; j < megh - i; j++) {
-                if (hum[j - 1] > hum[j]) {
-                    temp4 = hum[j - 1];
-                    hum[j - 1] = hum[j];
-                    hum[j] = temp4;
-                }
-            }
-        }
-*/
         for (int j = 0; j < megah; j++) {
             DataPoint v3 = new DataPoint(tiTH2[j], hdi[j]);
             values3[j] = v3;
@@ -463,7 +393,6 @@ public class InfoSensoRem extends AppCompatActivity {
               Log.e(TAG, "Humidity Error: " + error.getMessage());
               Toast.makeText(getApplicationContext(),
                       "Connection Error:" + error.getMessage(), Toast.LENGTH_LONG).show();
-              //  hideDialog();
 
           }
       });

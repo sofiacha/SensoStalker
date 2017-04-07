@@ -2,7 +2,6 @@ package dipl.sofia.sensostalker.activity;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,10 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -25,16 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-//import com.google.android.gms.maps.CameraUpdateFactory;
-//import com.google.android.gms.maps.GoogleMap;
-//import com.google.android.gms.maps.OnMapReadyCallback;
-//import com.google.android.gms.maps.SupportMapFragment;
-//import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-//import com.google.android.gms.maps.model.LatLng;
-//import com.google.android.gms.maps.model.Marker;
-//import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,7 +38,6 @@ import dipl.sofia.sensostalker.helper.SessionManager;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-//import dipl.sofia.sensostalker.R;
 
 public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -84,15 +71,9 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
         // session manager
         session = new SessionManager(getApplicationContext());
 
-        //  Log.d(TAG, "8ermokrasia11: " + tempeh);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-
-
-
-
     }
 
 
@@ -108,7 +89,6 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        // S_O=true;
         Fortwsh(new VolleyCallback() {
             @Override
             public void onSuccess(String result) {
@@ -142,7 +122,6 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
     public void beepForAnHour1() {
         final Runnable beeper = new Runnable() {
             public void run() {
-               // mMap.clear();
                 Fortwsh(new VolleyCallback() {
                     @Override
                     public void onSuccess(String result) {
@@ -170,16 +149,11 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
         // Zoom out to zoom level 10, animating with a duration of 2 seconds.
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-
-
     }
 
 
     public void Fortwsh(final VolleyCallback callback) {
         String tag_string_req = "req_update";
-        // pDialog.show();
-
-
         JsonObjectRequest jsarRequest = new JsonObjectRequest
                 (AppConfig.URL_MARKCOL, null, new Response.Listener<JSONObject>() {
 
@@ -188,20 +162,16 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
                         int temph = 5;
                         try {
                             temph = response.getInt("temperature");
-                            // Log.d(TAG, "Marker 8ermokrasia: " + response.toString());
-                            //Log.d(TAG, "8ermokrasia13: " + response.getString("temperature"));
 
                             callback.onSuccess(response.getString("temperature"));
                             LatLng panep = new LatLng(38.283689, 21.789079);
                             moveToCurrentLocation(panep);
 
-                            //http://stackoverflow.com/questions/708012/how-to-declare-global-variables-in-android
-                           // Log.d(TAG, "8ermokrasia12: " + temph);
                             if (temph <= 39) {
                                 if (marker != null) {
                                     marker.remove();
                                 }
-                                //xrwmata pou mporw na xrhsimopoihsw     HUE_AZURE      HUE_BLUE            HUE_CYAN            HUE_GREEN            HUE_MAGENTA            HUE_ORANGE            HUE_RED           HUE_ROSE       HUE_VIOLET         HUE_YELLOW
+                                //colors:     HUE_AZURE      HUE_BLUE            HUE_CYAN            HUE_GREEN            HUE_MAGENTA            HUE_ORANGE            HUE_RED           HUE_ROSE       HUE_VIOLET         HUE_YELLOW
                                 marker =  mMap.addMarker(new MarkerOptions().position(panep).title("Ο αισθητήρας είναι συνδεδεμένος!").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(panep));
                                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -217,7 +187,7 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
                                 if (marker != null) {
                                     marker.remove();
                                 }
-                                //xrwmata pou mporw na xrhsimopoihsw     HUE_AZURE      HUE_BLUE            HUE_CYAN            HUE_GREEN            HUE_MAGENTA            HUE_ORANGE            HUE_RED           HUE_ROSE       HUE_VIOLET         HUE_YELLOW
+                                //colors:   HUE_AZURE      HUE_BLUE            HUE_CYAN            HUE_GREEN            HUE_MAGENTA            HUE_ORANGE            HUE_RED           HUE_ROSE       HUE_VIOLET         HUE_YELLOW
                               marker =  mMap.addMarker(new MarkerOptions().position(panep).title("ΠΡΟΣΟΧΗ ΥΨΗΛΕΣ ΘΕΡΜΟΚΡΑΣΙΕΣ!").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_heat)));
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(panep));
                                 mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -232,9 +202,7 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            //callback.onFail(e.toString());
                         }
-                        // tempeh = response.getInt();
 
                     }
                 }, new Response.ErrorListener() {
@@ -247,13 +215,8 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
 
                     }
                 });
-        //  Toast.makeText(getApplicationContext(),tempes.toString(), Toast.LENGTH_LONG).show();
-
-// Access the RequestQueue through your singleton class.
-
+        // Access the RequestQueue through your singleton class.
         AppController.getInstance().addToRequestQueue(jsarRequest, tag_string_req);
-        // Log.d(TAG, "8ermokrasia14: " + tempeh);
-
     }
 
     /**
@@ -263,7 +226,6 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
                 .setName("MapSensoRe Page")
-
                 .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
                 .build();
         return new Action.Builder(Action.TYPE_VIEW)
@@ -276,7 +238,6 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
     @Override
     public void onStart() {
         super.onStart();
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
@@ -286,7 +247,6 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
     @Override
     public void onStop() {
         super.onStop();
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
@@ -295,7 +255,6 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
 
     public interface VolleyCallback {
         void onSuccess(String result);
-
         void onFail(String msg);
     }
 
@@ -307,32 +266,25 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
                 Intent remot75 = new Intent(MapSensoRe.this, LoggedInActivity.class);
                 startActivityForResult(remot75, 0);
                 return true;
-
             case R.id.action_about:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
                 Intent remot65 = new Intent(MapSensoRe.this, AboutActivity.class);
                 startActivityForResult(remot65, 0);
                 return true;
-
             case R.id.action_logout:
                 logoutUser();
-
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
-       // return super.onOptionsItemSelected(item);
     }
 
 
     private void logoutUser() {
         session.setLogin(false);
-
         db.deleteUsers();
-
         // Launching the login activity
         Intent intent = new Intent(MapSensoRe.this, LoginActivity.class);
         startActivity(intent);
@@ -345,5 +297,4 @@ public class MapSensoRe extends AppCompatActivity implements OnMapReadyCallback 
         inflater.inflate(R.menu.map_menu, menu);
         return true;
     }
-
 }

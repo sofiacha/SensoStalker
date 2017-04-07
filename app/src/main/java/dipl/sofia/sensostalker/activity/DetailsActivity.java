@@ -1,6 +1,5 @@
 package dipl.sofia.sensostalker.activity;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -29,13 +27,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import dipl.sofia.sensostalker.R;
 import dipl.sofia.sensostalker.app.AppConfig;
@@ -51,7 +43,6 @@ public class DetailsActivity extends AppCompatActivity {
     private SQLiteHandler db;
 
     ArrayList<String> tempes;
-    ArrayAdapter<String> adapter;
     TableLayout ta1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,15 +65,7 @@ public class DetailsActivity extends AppCompatActivity {
         pDialog.setCancelable(false);
 
         fillCountryTable("Average Temperature", "Day", "Hour", "Divergence", "Sensor ID");
-
-        //    adapter = new ArrayAdapter(this, R.layout.table_layout, R.id.temp, tempes);
-        //    setListAdapter(adapter);
-       //     String jh = "Average     Time     Date     Divergence     IdSensor";
-      //      tempes.add(jh);
            Fortwsh();
-        //fillCountryTable();
-
-
     }
 
     private void Fortwsh() {
@@ -96,16 +79,10 @@ public class DetailsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(TAG, "Update Response: " + response.toString());
-                        //hideDialog();
-                       // Toast.makeText(getApplicationContext(),"whhhhoooooo", Toast.LENGTH_LONG).show();
-
                         for (int i = 0; i < response.length(); i++) {
-
-
-
                             try {
                                 JSONObject jo = response.getJSONObject(i);
-                                String avertemp = jo.getString("avertemp"); // + "     " + jo.getString("hour") + "     " + jo.getString("day") + "     " + jo.getString("divergence") +  "     " + jo.getString("idsens");
+                                String avertemp = jo.getString("avertemp");
                                 String day = jo.getString("day");
                                 String hour = jo.getString("hour");
                                 String div = jo.getString("divergence");
@@ -113,20 +90,12 @@ public class DetailsActivity extends AppCompatActivity {
                                 //Converting to dip unit
 
                                 fillCountryTable(avertemp, day, hour, div, senid);
-
-                                    //String hour = ;
-       //                         tableLayout.addView(createTableRow(adapter.getItem(i));
-                               // tempes.add(avertemp);
-                               // Toast.makeText(getApplicationContext(),tempes.toString(), Toast.LENGTH_LONG).show();
-
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
 
                         pDialog.dismiss();
-                       // adapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
 
@@ -135,13 +104,9 @@ public class DetailsActivity extends AppCompatActivity {
                         Log.e(TAG, "Update Error: " + error.getMessage());
                         Toast.makeText(getApplicationContext(),
                                 "Connection Error:" + error.getMessage(), Toast.LENGTH_LONG).show();
-                      //  hideDialog();
-
                     }
                 });
-      //  Toast.makeText(getApplicationContext(),tempes.toString(), Toast.LENGTH_LONG).show();
-
-// Access the RequestQueue through your singleton class.
+        // Access the RequestQueue through your singleton class.
         AppController.getInstance().addToRequestQueue(jsarRequest, tag_string_req);
     }
 
@@ -242,7 +207,6 @@ public class DetailsActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-        // return super.onOptionsItemSelected(item);
     }
 
 

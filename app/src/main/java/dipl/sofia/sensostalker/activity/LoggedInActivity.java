@@ -1,19 +1,14 @@
 package dipl.sofia.sensostalker.activity;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import dipl.sofia.sensostalker.R;
-import dipl.sofia.sensostalker.app.AppConfig;
-import dipl.sofia.sensostalker.app.AppController;
 import dipl.sofia.sensostalker.helper.SQLiteHandler;
 import dipl.sofia.sensostalker.helper.SessionManager;
 
@@ -77,7 +72,6 @@ public class LoggedInActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //Log.d("DEBUG", "button11 pressed");
                 Intent remot24 = new Intent(LoggedInActivity.this, UpdateLogIn.class);
                 startActivityForResult(remot24,0);
             }
@@ -86,16 +80,11 @@ public class LoggedInActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //Log.d("DEBUG", "button11 pressed");
                 Intent remot25 = new Intent(LoggedInActivity.this, MapSensoRe.class);
                 startActivityForResult(remot25,0);
             }
         });
     }
-
-
-
-
 
     /**
      * Logging out the user. Will set isLoggedIn flag to false in shared
@@ -103,9 +92,7 @@ public class LoggedInActivity extends AppCompatActivity {
      * */
     private void logoutUser() {
         session.setLogin(false);
-
         db.deleteUsers();
-
         // Launching the login activity
         Intent intent = new Intent(LoggedInActivity.this, LoginActivity.class);
         startActivity(intent);

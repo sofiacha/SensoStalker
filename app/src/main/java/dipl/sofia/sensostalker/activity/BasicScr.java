@@ -1,6 +1,5 @@
 package dipl.sofia.sensostalker.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
@@ -12,32 +11,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewDebug;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.LinearLayout;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import android.widget.LinearLayout.LayoutParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 
-import android.view.View;
-import android.view.ViewGroup;
 import dipl.sofia.sensostalker.R;
 import dipl.sofia.sensostalker.app.AppConfig;
 import dipl.sofia.sensostalker.app.AppController;
@@ -48,12 +35,9 @@ import static java.util.concurrent.TimeUnit.*;
 public class BasicScr extends AppCompatActivity implements View.OnTouchListener  {
     private SQLiteHandler db;
     private SessionManager session;
-  //  ArrayList<String> temps;
-    private TextView txtLumos, btntemp, btnhm, txtFws, therm;
+    private TextView txtLumos, btntemp, btnhm, txtFws;
     private static final String TAG = BasicScr.class.getSimpleName();
     static int hm, thp, lumos;
-    private final Handler mHandler = new Handler();
-    private Runnable mTimer1;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     @Override
@@ -134,13 +118,9 @@ public class BasicScr extends AppCompatActivity implements View.OnTouchListener 
                                 hm = response.getInt("humidity");
                                Log.d(TAG, "hm: " + response.getString("humidity"));
                             String mpla0 = response.getString("humidity");
-                            //http://stackoverflow.com/questions/708012/how-to-declare-global-variables-in-android
-                            // Log.d(TAG, "fws: " + lumos);
                             btnhm.setText( mpla0 + "%");
-                            //  btnhm.setText();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            //callback.onFail(e.toString());
                         }
 
 
@@ -163,7 +143,6 @@ public class BasicScr extends AppCompatActivity implements View.OnTouchListener 
 
     }
 
-
     private void setTem1() {
         String tag_string_req = "req_update";
         JsonObjectRequest jsart1Request = new JsonObjectRequest
@@ -171,14 +150,10 @@ public class BasicScr extends AppCompatActivity implements View.OnTouchListener 
 
                     @Override
                     public void onResponse(JSONObject response) {
-                       // int lumos = 5;
                         thp = 5;
-                        //hm = 5;
                         try {
-                          //  lumos = response.getInt("light");
                             thp = response.getInt("temperature");
                             String mpla1 = response.getString("temperature");
-                           // Log.d(TAG, "thp: " + response.getString("temperature"));
                             final String DEGREE  = "\u00b0";
                             if (thp <= 35) {
                                 btntemp.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -189,7 +164,6 @@ public class BasicScr extends AppCompatActivity implements View.OnTouchListener 
                             btntemp.setText( mpla1 + DEGREE + "C");
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            //callback.onFail(e.toString());
                         }
 
 
@@ -219,17 +193,9 @@ public class BasicScr extends AppCompatActivity implements View.OnTouchListener 
                 @Override
                 public void onResponse(JSONObject response) {
 
-                   // thp = 5;
-                   // hm = 5;
                     try {
                         lumos = response.getInt("light");
-                        String mpla2 = response.getString("light");
-                       // thp = response.getInt("temperature");
-                       // hm = response.getInt("humidity");
-                        // Log.d(TAG, "Marker 8ermokrasia: " + response.toString());
-                       // Log.d(TAG, "thp: " + response.getString("temperature"));
-                      //  Log.d(TAG, "hm: " + response.getString("humidity"));
-                        //http://stackoverflow.com/questions/708012/how-to-declare-global-variables-in-android
+
                         Log.d(TAG, "fws: " + lumos);
                         if (lumos <= 10) {
                             txtLumos.setText("Το φως είναι κλειστό ");
@@ -246,10 +212,8 @@ public class BasicScr extends AppCompatActivity implements View.OnTouchListener 
                             }
                         }
 
-                        //  btnhm.setText();
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        //callback.onFail(e.toString());
                     }
 
 

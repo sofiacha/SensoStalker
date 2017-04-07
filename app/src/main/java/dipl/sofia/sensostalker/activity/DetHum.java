@@ -1,6 +1,5 @@
 package dipl.sofia.sensostalker.activity;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -29,13 +27,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import dipl.sofia.sensostalker.R;
 import dipl.sofia.sensostalker.app.AppConfig;
@@ -51,7 +43,6 @@ public class DetHum extends AppCompatActivity {
     private SQLiteHandler db;
 
     ArrayList<String> humi;
-    ArrayAdapter<String> adapter;
     TableLayout ta1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,15 +65,7 @@ public class DetHum extends AppCompatActivity {
           pDialog.setCancelable(false);
 
         fillCountryTable("Average Humidity", "Day", "Hour", "Divergence", "Sensor ID");
-
-        //    adapter = new ArrayAdapter(this, R.layout.table_layout, R.id.temp, tempes);
-        //    setListAdapter(adapter);
-        //     String jh = "Average     Time     Date     Divergence     IdSensor";
-        //      tempes.add(jh);
         Fortwsh();
-        //fillCountryTable();
-
-
     }
 
     private void Fortwsh() {
@@ -96,32 +79,22 @@ public class DetHum extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(TAG, "Hum Response: " + response.toString());
-                        //hideDialog();
-                        // Toast.makeText(getApplicationContext(),"whhhhoooooo", Toast.LENGTH_LONG).show();
 
                         for (int i = 0; i < response.length(); i++) {
-
-
-
                             try {
                                 JSONObject jo = response.getJSONObject(i);
-                                String averhum = jo.getString("humidit"); // + "     " + jo.getString("hour") + "     " + jo.getString("day") + "     " + jo.getString("divergence") +  "     " + jo.getString("idsens");
+                                String averhum = jo.getString("humidit");
                                 String day = jo.getString("hdate");
                                 String hour = jo.getString("hhour");
                                 String div = jo.getString("divergence");
                                 String senid = jo.getString("idsens");
                                 //Converting to dip unit
-
                                 fillCountryTable(averhum, day, hour, div, senid);
-
-
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                         pDialog.dismiss();
-
                     }
                 }, new Response.ErrorListener() {
 
@@ -130,23 +103,15 @@ public class DetHum extends AppCompatActivity {
                 Log.e(TAG, "Hum Error: " + error.getMessage());
                 Toast.makeText(getApplicationContext(),
                         "Connection Error:" + error.getMessage(), Toast.LENGTH_LONG).show();
-
-
             }
         });
-
-
-// Access the RequestQueue through your singleton class.
+        // Access the RequestQueue through your singleton class.
         AppController.getInstance().addToRequestQueue(jsarRequest, tag_string_req);
     }
 
-
-
     private void logoutUser() {
         session.setLogin(false);
-
         db.deleteUsers();
-
         // Launching the login activity
         Intent intent = new Intent(DetHum.this, LoginActivity.class);
         startActivity(intent);
@@ -200,7 +165,6 @@ public class DetHum extends AppCompatActivity {
 
         ta1.addView(row, new TableLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-
     }
 
 
@@ -229,9 +193,7 @@ public class DetHum extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-        // return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override

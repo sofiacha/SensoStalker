@@ -1,14 +1,14 @@
 package dipl.sofia.sensostalker.app;
 
 public class AppConfig {
-	// Server user login url    192.168.1.111
-
+	// Server user login url
+	//it needs to be changed to match the url of your server
 	public static String URL_LOGIN = "http://192.168.1.17/sensostalker/login.php";
 
 	// Server user register url
 	public static String URL_REGISTER = "http://192.168.1.17/sensostalker/register.php";
 
-	// Server user update url  192.168.1.5   192.168.196.44     150.140.210.160         192.168.1.111
+	// Server user update url
 	public static String URL_UP = "http://192.168.1.17/sensostalker/update.php";
 
 	public static String URL_SHOW ="http://192.168.1.17/sensostalker/shavtemp.php";

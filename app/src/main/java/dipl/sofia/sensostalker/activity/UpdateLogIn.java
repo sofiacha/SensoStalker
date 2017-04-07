@@ -113,16 +113,14 @@ public class UpdateLogIn extends AppCompatActivity {
                 Log.d(TAG, "Update Response: " + response.toString());
                 hideDialog();
 
-                //Toast.makeText(getApplicationContext(),"whhhhoooooo", Toast.LENGTH_LONG).show();
                 try {
 
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
                     String str = String.valueOf(error);
 
-                   // Toast.makeText(getApplicationContext(), str , Toast.LENGTH_LONG).show();
                     if (!error) {
-                       // session.setLogin(true);
+
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
                         String uid1 = jObj.getString("uid");
@@ -131,19 +129,13 @@ public class UpdateLogIn extends AppCompatActivity {
 
                         String name1 = user.getString("name");
                         String email1 = user.getString("email");
-                      //  String password1 = user.getString("password");
-                       // String updated_at = user.getString("updated_at");
-
-                       // Toast.makeText(getApplicationContext(), name1 , Toast.LENGTH_LONG).show();
 
                         db.UpdUser(name1, email1, uid1);
 
                         Toast.makeText(getApplicationContext(), "User successfully updated!", Toast.LENGTH_LONG).show();
 
                         // Launch loggedin activity
-                        Intent intent = new Intent(
-                                UpdateLogIn.this,
-                                LoggedInActivity.class);
+                        Intent intent = new Intent(UpdateLogIn.this, LoggedInActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
@@ -157,7 +149,6 @@ public class UpdateLogIn extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
 

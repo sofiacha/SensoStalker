@@ -1,9 +1,7 @@
 package dipl.sofia.sensostalker.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-//import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -14,12 +12,10 @@ import android.widget.Button;
 
 import dipl.sofia.sensostalker.R;
 
-//import dipl.sofia.sensostalker.R;
 
 public class MainActivity extends AppCompatActivity {
 
     android.widget.Button but1;
-    Button but2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
