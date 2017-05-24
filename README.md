@@ -1,3 +1,9 @@
 SensoStalker
 
-SensoStalker is a project created for my thesis. It is an Android application which represents information about a wireless sensor network.
+SensoStalker is a project created for my <a href="http://nemertes.lis.upatras.gr/jspui//handle/10889/10090">thesis</a>.An abstract about my thesis follows.
+
+Wireless Sensor Networks are, in recent times, a promising research field. The aim of this thesis is to explore whether the information provided by a wireless sensor network can be recorded and processed to provide information to the user. The student is asked to collect data from a wireless sensor network in a room (building, factory), to create the necessary infrastructure (database) and to create an application for mobile devices (Android) presenting the network of sensors in the room and the data collected from them.
+ 
+ Primarily there is a general study on wireless sensor networks starting initially defining what is computer network, and then specifying into the sensor networks, their applications, the factors affecting the sensor networks and security issues raised. Afterwards, it is presented the kind of environments that are been used. Firstly, it is presented the operating system TinyOS wherein the programming language NesC is used to program the nodes, it is then shown how to create the database and hence the server itself which is used for storing and accessing the collected data. Eventually the Android Studio platform is presented which is used for developing the Android application and hence to present our data on mobile devices. 
+ 
+ In the end, the application which created for this purpose is presented. The application developed in Android and it uses a database to get the data from sensors and visualizes and presents them suitable. Specifically using the operating system TinyOS gets from a Telosb sensor the metrics for temperature, humidity and light of a room and it shows them appropriately through the Android application. The thesis closes with comments on the results and recommendations for further development of the application.
