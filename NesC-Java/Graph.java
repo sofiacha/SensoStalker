@@ -14,19 +14,7 @@ import java.awt.event.*;
 import java.awt.font.*;
 import java.awt.geom.*;
 import java.util.*;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-  import java.io.File;
-    import java.io.FileWriter;
-    import java.io.IOException;
-import java.net.URL;
-import java.util.Scanner;
-import java.io.BufferedReader;
-//mport java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;;
-import java.sql.*;
+
 /* Panel for drawing mote-data graphs */
 class Graph extends JPanel
 {
@@ -43,17 +31,6 @@ class Graph extends JPanel
 
     int gx0, gx1, gy0, gy1; // graph bounds
     int scale = 2; // gx1 - gx0 == MIN_WIDTH << scale
-	int count = 0;
-	int cou1 = 0;
-	int cou2 = 0;
-	int cou3 = 0;
-	int count1 = 0;
-	int count2 = 0;
-	double temp1 = 0;
-	int tempo1 = 0;
-	double temp2 = 0;
-	int tempo2 = 0 ;
-	double temp3 = 0;
     Window parent;
 
     /* Graph to screen coordinate conversion support */
@@ -94,7 +71,6 @@ class Graph extends JPanel
     this.parent = parent;
     gy0 = 0; gy1 = 0xffff;
     gx0 = 0; gx1 = MIN_WIDTH << scale;
-
     }
 
     void rightDrawString(
@@ -175,14 +151,14 @@ class Graph extends JPanel
     /* Draw graph for mote nodeId */
     protected void drawGraph(Graphics g, int nodeId) {
     SingleGraph sg = new SingleGraph(g, nodeId);
-	
-   if (gx1 - gx0 >= width) {
+
+    if (gx1 - gx0 >= width) {
         for (int sx = 0; sx < width; sx++)
         sg.nextPoint(g, graphX(sx), sx);
     } else {
         for (int gx = gx0; gx <= gx1; gx++)
         sg.nextPoint(g, gx, screenX(gx));
-    } 
+    }
     }
 
     /* Inner class to simplify drawing a graph. Simplify initialise it, then
@@ -201,68 +177,10 @@ class Graph extends JPanel
     void nextPoint(Graphics g, int gx, int sx) {
         int gy = parent.parent.data.getData(nodeId, gx);
         int sy = -1;
-	
+
         if (gy >= 0) { // Ignore missing values
         double rsy = height - yscale * (gy - gy0);
-	//connectl(gy);
 
-	if (count%10 == 0){	
-		//temp1 = 2.5 * (((double)gy) / 4096.0) * 6250.0;
-		tempo1 = (int)temp1;
-		 connectl(gy);
-		//connectl(tempo1);
-		 temp1=0;
-		 tempo1 =0;
-		count++;
-		cou1++;
-	}
-	else if (count%10 == 1){
-		temp1 = (-39.60 + 0.01 *((double)gy));
-		tempo1 = Math.abs((int)temp1);
-		 connectt(tempo1);
-		count++;
-		cou2++;
-	}
-	else{
-		temp2 = temp2 +((double)gy) ;
-			if (count%10 == 9){
-				temp2=temp2/8;
-				 temp3 = -4 + 0.0405*temp2 + (-2.8 * Math.pow(10,-6) * Math.pow(temp2,2) );
-				temp3 = (temp1 - 25) * (0.01 + 0.00008*temp2) + temp3;
-				tempo2 = (int)temp3;
-				connecth(tempo2);
-				temp3 = 0;
-				temp2 = 0;
-				temp1 = 0;
-				tempo2 = 0;
-				tempo1 = 0;
-				cou3++;
-			}
-		count++;
-	}
-	
-	if ((cou2%240 == 0) && (cou2 != 0)){
-		if (count1 % 10 == 0) {
-		call_tempm();
-		 }
-		if (count1% 520 == 0 ){
-		call_aver_temp();
-		}
-		count1++;
-	}
-
-	if ((cou3%240 == 0) && (cou3 != 0)){
-		if (count2 % 10 == 0) {
-		 call_humm();
-		 }
-		if (count2% 520 == 0 ){
-		call_aver_hum();
-		}
-		count2++;
-		
-	}
-
-	
         // Ignore problem values
         if (rsy >= -1e6 && rsy <= 1e6) {
             sy = (int)(rsy + 0.5);
@@ -276,171 +194,6 @@ class Graph extends JPanel
         lastsy = sy;
     }
     }
-
-
-public static void call_tempm(){
-try {
-		//150.140.210.194   192.168.196.44      192.168.2.147
-		String urlL = "http://150.140.210.194/sensostalker/tempm.php?temp=0";
-		URL url = new URL(urlL);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		StringBuffer sb = new StringBuffer();
-		String line;
-		while((line = in.readLine()) != null){
-			sb.append(line);
-		}
-		in.close();
-		System.out.println(sb.toString());
-		}
-		catch ( Exception e ){
-		System.out.println("Database not connected");
-		System.err.println("Got an exception! ");
-		System.err.println(e.getMessage());
-		}
-}
-
-
-public static void call_humm(){
-try {
-		//150.140.210.160   192.168.196.44      192.168.2.147
-		String urlL = "http://150.140.210.194/sensostalker/humm.php?hum=0";
-		URL url = new URL(urlL);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		StringBuffer sb = new StringBuffer();
-		String line;
-		while((line = in.readLine()) != null){
-			sb.append(line);
-		}
-		in.close();
-		System.out.println(sb.toString());
-		}
-		catch ( Exception e ){
-		System.out.println("Database not connected");
-		System.err.println("Got an exception! ");
-		System.err.println(e.getMessage());
-		}
-}
-
-
-public static void call_aver_temp(){
-try {
-		//150.140.210.160   192.168.196.44      192.168.2.147
-		String urlL = "http://150.140.210.194/sensostalker/avrgvrnc.php?temp=0";
-		URL url = new URL(urlL);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		StringBuffer sb = new StringBuffer();
-		String line;
-		while((line = in.readLine()) != null){
-			sb.append(line);
-		}
-		in.close();
-		System.out.println(sb.toString());
-		}
-		catch ( Exception e ){
-		System.out.println("Database not connected");
-		System.err.println("Got an exception! ");
-		System.err.println(e.getMessage());
-		}
-}
-
-public static void call_aver_hum(){
-try {
-		//150.140.210.160   192.168.196.44      192.168.2.147
-		String urlL = "http://150.140.210.194/sensostalker/avrghum.php?hum=0";
-		URL url = new URL(urlL);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		StringBuffer sb = new StringBuffer();
-		String line;
-		while((line = in.readLine()) != null){
-			sb.append(line);
-		}
-		in.close();
-		System.out.println(sb.toString());
-		}
-		catch ( Exception e ){
-		System.out.println("Database not connected");
-		System.err.println("Got an exception! ");
-		System.err.println(e.getMessage());
-		}
-}
-
-
-public static void connectl(int gyx){
-	try {
-		//150.140.210.160   192.168.196.44      192.168.2.147
-		String urlL = "http://150.140.210.194/sensostalker/islum.php?lighth=" + Integer.toString(gyx);
-		URL url = new URL(urlL);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		StringBuffer sb = new StringBuffer();
-		String line;
-		while((line = in.readLine()) != null){
-			sb.append(line);
-		}
-		in.close();
-		System.out.println(sb.toString());
-		}
-		catch ( Exception e ){
-		System.out.println("Database not connected");
-		System.err.println("Got an exception! ");
-		System.err.println(e.getMessage());
-		}
-}
-
-public static void connectt(int gyx){
-	try {
-		//150.140.210.160         192.168.2.147
-		String urlL = "http://150.140.210.194/sensostalker/istemp.php?temp=" + Integer.toString(gyx);
-		URL url = new URL(urlL);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		StringBuffer sb = new StringBuffer();
-		String line;
-		while((line = in.readLine()) != null){
-			sb.append(line);
-		}
-		in.close();
-		System.out.println(sb.toString());
-		}
-		catch ( Exception e ){
-		System.out.println("Database not connected");
-		System.err.println("Got an exception! ");
-		System.err.println(e.getMessage());
-		} 
-}
-
-public static void connecth(int gyx){
-	try {
-		//150.140.210.160
-		String urlL = "http://150.140.210.194/sensostalker/ishum.php?hum=" + Integer.toString(gyx);
-		URL url = new URL(urlL);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		StringBuffer sb = new StringBuffer();
-		String line;
-		while((line = in.readLine()) != null){
-			sb.append(line);
-		}
-		in.close();
-		System.out.println(sb.toString());
-		}
-		catch ( Exception e ){
-		System.out.println("Database not connected");
-		System.err.println("Got an exception! ");
-		System.err.println(e.getMessage());
-		}
-}
 
     /* Update X-axis range in GUI */
     void updateXLabel() {

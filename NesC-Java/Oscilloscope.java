@@ -11,8 +11,6 @@
 import net.tinyos.message.*;
 import net.tinyos.util.*;
 import java.io.*;
-//import java.io.FileOutputStream;
-//import java.io.IOException;
 
 /* The "Oscilloscope" demo app. Displays graphs showing data received from
    the Oscilloscope mote application, and allows the user to:
@@ -72,8 +70,7 @@ public class Oscilloscope implements MessageListener
         /* Update interval and mote data */
         periodUpdate(omsg.get_version(), omsg.get_interval());
         data.update(omsg.get_id(), omsg.get_count(), omsg.get_readings());
-	
-	
+
         /* Inform the GUI that new data showed up */
         window.newData();
     }

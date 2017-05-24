@@ -1,5 +1,5 @@
 /*
-opyright (c) 2006 Intel Corporation
+ * Copyright (c) 2006 Intel Corporation
  * All rights reserved.
  *
  * This file is distributed under the terms in the attached INTEL-LICENSE     
@@ -11,9 +11,6 @@ opyright (c) 2006 Intel Corporation
 /**
  * Class holding all data received from a mote.
  */
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 class Node {
     /* Data is hold in an array whose size is a multiple of INCREMENT, and
        INCREMENT itself must be a multiple of Constant.NREADINGS. This
@@ -21,8 +18,7 @@ class Node {
        (see setEnd) */
     final static int INCREMENT = 100 * Constants.NREADINGS;
     final static int MAX_SIZE = 100 * INCREMENT; // Must be multiple of INCREMENT
-   // BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-    
+
     /* The mote's identifier */
     int id;
 
@@ -96,7 +92,6 @@ class Node {
 
     /* Return value of sample x, or -1 for missing data */
     int getData(int x) {
-         
     if (x < dataStart || x >= dataEnd) {
         return -1;
     } else {

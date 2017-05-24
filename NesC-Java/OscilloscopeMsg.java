@@ -7,12 +7,12 @@
 public class OscilloscopeMsg extends net.tinyos.message.Message {
 
     /** The default size of this message type in bytes. */
-    public static final int DEFAULT_MESSAGE_SIZE = 28;
+    public static final int DEFAULT_MESSAGE_SIZE = 14;
 
     /** The Active Message type associated with this message. */
     public static final int AM_TYPE = 147;
 
-    /** Create a new OscilloscopeMsg of size 28. */
+    /** Create a new OscilloscopeMsg of size 14. */
     public OscilloscopeMsg() {
         super(DEFAULT_MESSAGE_SIZE);
         amTypeSet(AM_TYPE);
@@ -98,7 +98,7 @@ public class OscilloscopeMsg extends net.tinyos.message.Message {
       } catch (ArrayIndexOutOfBoundsException aioobe) { /* Skip field */ }
       try {
         s += "  [readings=";
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
           s += "0x"+Long.toHexString(getElement_readings(i) & 0xffff)+" ";
         }
         s += "]\n";
@@ -386,7 +386,7 @@ public class OscilloscopeMsg extends net.tinyos.message.Message {
      */
     public static int offset_readings(int index1) {
         int offset = 64;
-        if (index1 < 0 || index1 >= 10) throw new ArrayIndexOutOfBoundsException();
+        if (index1 < 0 || index1 >= 3) throw new ArrayIndexOutOfBoundsException();
         offset += 0 + index1 * 16;
         return (offset / 8);
     }
@@ -396,7 +396,7 @@ public class OscilloscopeMsg extends net.tinyos.message.Message {
      */
     public static int offsetBits_readings(int index1) {
         int offset = 64;
-        if (index1 < 0 || index1 >= 10) throw new ArrayIndexOutOfBoundsException();
+        if (index1 < 0 || index1 >= 3) throw new ArrayIndexOutOfBoundsException();
         offset += 0 + index1 * 16;
         return offset;
     }
@@ -405,7 +405,7 @@ public class OscilloscopeMsg extends net.tinyos.message.Message {
      * Return the entire array 'readings' as a int[]
      */
     public int[] get_readings() {
-        int[] tmp = new int[10];
+        int[] tmp = new int[3];
         for (int index0 = 0; index0 < numElements_readings(0); index0++) {
             tmp[index0] = getElement_readings(index0);
         }
@@ -439,14 +439,14 @@ public class OscilloscopeMsg extends net.tinyos.message.Message {
      * Return the total size, in bytes, of the array 'readings'
      */
     public static int totalSize_readings() {
-        return (160 / 8);
+        return (48 / 8);
     }
 
     /**
      * Return the total size, in bits, of the array 'readings'
      */
     public static int totalSizeBits_readings() {
-        return 160;
+        return 48;
     }
 
     /**
@@ -474,7 +474,7 @@ public class OscilloscopeMsg extends net.tinyos.message.Message {
      * Return the number of elements in the array 'readings'
      */
     public static int numElements_readings() {
-        return 10;
+        return 3;
     }
 
     /**
@@ -482,7 +482,7 @@ public class OscilloscopeMsg extends net.tinyos.message.Message {
      * for the given dimension.
      */
     public static int numElements_readings(int dimension) {
-      int array_dims[] = { 10,  };
+      int array_dims[] = { 3,  };
         if (dimension < 0 || dimension >= 1) throw new ArrayIndexOutOfBoundsException();
         if (array_dims[dimension] == 0) throw new IllegalArgumentException("Array dimension "+dimension+" has unknown size");
         return array_dims[dimension];
