@@ -1,4 +1,4 @@
-#SensoStalker
+# SensoStalker
 
 SensoStalker is a project created for my <a href="http://nemertes.lis.upatras.gr/jspui//handle/10889/10090">thesis</a>.An abstract about my thesis follows.
 
