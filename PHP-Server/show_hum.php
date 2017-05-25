@@ -5,9 +5,6 @@
  * @link http://www.androidhive.info/2012/01/android-login-and-registration-with-php-mysql-and-sqlite/ Complete tutorial
  */
 error_reporting(0);
-//require_once 'include/DB_Functions.php';
-
-//$db = new DB_Functions();
 
 // json response array
 $response = array();
@@ -18,9 +15,6 @@ $db = new DB_CONNECT();
  
     // get the temp by email and password
  $hum = mysql_query("SELECT * FROM hum") or die(mysql_error());
-
-	
-
     
 		if (mysql_num_rows($hum) > 0) {
 		$response = array();
@@ -28,7 +22,6 @@ $db = new DB_CONNECT();
 		while ($row= mysql_fetch_assoc($hum)) {
         // use is found
 		$response[] = $row;
-		       
 		}
 		 echo json_encode($response);
 		}
@@ -38,6 +31,4 @@ $db = new DB_CONNECT();
         $response["error_msg"] = "There is no entries to display!";
         echo json_encode($response);
     }
-
 ?>
-

@@ -91,8 +91,6 @@ public class TermoAct extends AppCompatActivity {
         } else {
             Fortwsh_grafikwn();
         }
-
-
     }
 
     private void Fortwsh_grafikwn() {

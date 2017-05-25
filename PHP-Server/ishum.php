@@ -10,9 +10,7 @@ require_once 'include/db_connect_.php';
 // connecting to db
 $db = new DB_CONNECT();
 
-
 if (isset($_GET['hum']) ) {
-
 
     $hum = $_GET['hum'];
  

@@ -1,6 +1,4 @@
 <?php
-
-
 error_reporting(0);
 require_once 'include/DB_Functions.php';
 $db = new DB_Functions();
@@ -46,4 +44,3 @@ if (isset($_POST['email']) && (isset($_POST['name']) || isset($_POST['password']
     echo json_encode($response);
 }
 ?>
-

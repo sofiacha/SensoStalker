@@ -10,9 +10,7 @@ require_once 'include/db_connect_.php';
 // connecting to db
 $db = new DB_CONNECT();
 
-
 if (isset($_GET['temp']) ) {
-
 
     $temp = $_GET['temp'];
  
@@ -20,11 +18,10 @@ if (isset($_GET['temp']) ) {
        if (mysql_num_rows($temp) >= 0) {
 		
 		echo $temp ;
-		}
-		 else {
-      
+	   }else {
+     
         echo "There is no entries to display!";
-    }
+	   }
 }
 ?>
 
